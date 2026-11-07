@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Empire Ottoman</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#111811;color:#eee4c9;font-family:Arial,sans-serif}
+header{text-align:center;padding:22px;background:#202b20;border-bottom:2px solid #b89548}
+h1{color:#d9b65c;margin:5px}
+main{max-width:600px;margin:auto;padding:14px}
+.card{background:#253126;border:1px solid #75633a;border-radius:12px;padding:15px;margin:12px 0}
+.stats{display:flex;justify-content:space-around;text-align:center;gap:5px}
+.stats b{display:block;color:#e5c36a;font-size:20px}
+button{background:#755b2b;color:white;border:1px solid #d4b45f;border-radius:8px;padding:12px;margin:4px;font-weight:bold}
+button:disabled{opacity:.4}
+.tabs{display:flex;justify-content:space-around}
+.hidden{display:none}
+.log{font-size:13px;color:#d4c9aa}
+</style>
+</head>
+<body>
+<header>
+<div>☾ OSMANLI İMPARATORLUĞU ☾</div>
+<h1>EMPIRE OTTOMAN</h1>
+<div>Bir beyliğin kaderini sen belirle</div>
+</header>
+<main>
+<div class="card stats">
+<div>Altın<b id="gold">500</b></div>
+<div>Erzak<b id="food">300</b></div>
+<div>Şöhret<b id="honour">0</b></div>
+</div>
+
+<div class="card">
+<h2>🏰 Karargâh</h2>
+<p>Ordunu kur, kaleni geliştir ve topraklarını genişlet.</p>
+<div class="stats">
+<div>Asker<b id="soldiers">10</b></div>
+<div>Kale seviyesi<b id="level">1</b></div>
+<div>Sancak<b id="territory">1</b></div>
+</div>
+<button onclick="recruit()">+5 Asker · 100 Altın</button>
+<button onclick="upgrade()">Kaleyi geliştir · 150 Altın</button>
+</div>
+
+<div class="card">
+<h2>⚔️ Sınır Seferi</h2>
+<p>Düşman kuvveti sınır hattında görüldü.</p>
+<div class="stats">
+<div>Düşman<b id="enemy">8</b></div>
+<div>Gücün<b id="power">12</b></div>
+</div>
+<button onclick="startBattle()">Sefer başlat</button>
+<button onclick="attack()">Hücum et</button>
+<button onclick="defend()">Savun</button>
+<p id="battleStatus">Ordun hazır bekliyor.</p>
+</div>
+
+<div class="card">
+<h2>📜 Görevler</h2>
+<p>15 askere ulaş: 100 altın ödül</p>
+<button onclick="mission()">Ödülü al</button>
+</div>
+
+<div class="card">
+<h2>📖 Vakanüvis Defteri</h2>
+<ul class="log" id="log">
+<li>Yeni bir sancak kuruldu. Sefer hazırlıkları başladı.</li>
+</ul>
+</div>
+</main>
+
+<script>
+const tg=window.Telegram?.WebApp;
+tg?.ready();
+tg?.expand();
+
+let game;
+try{game=JSON.parse(localStorage.getItem("empireSave"))}catch(e){}
+if(!game)game={
+gold:500,food:300,honour:0,soldiers:10,
+level:1,territory:1,enemy:8,wins:0,claimed:false
+};
+
+function save(){
+localStorage.setItem("empireSave",JSON.stringify(game));
+render();
+}
+function log(message){
+const li=document.createElement("li");
+li.textContent=message;
+document.getElementById("log").prepend(li);
+}
+function render(){
+["gold","food","honour","soldiers","level","territory","enemy"].forEach(k=>{
+document.getElementById(k).textContent=game[k];
+});
+document.getElementById("power").textContent=game.soldiers+game.level*2;
+}
+function recruit(){
+if(game.gold<100){log("Yeterli altının yok.");return;}
+game.gold-=100;
+game.soldiers+=5;
+log("Beş asker orduna katıldı.");
+save();
+}
+function upgrade(){
+if(game.gold<150){log("Yeterli altının yok.");return;}
+game.gold-=150;
+game.level++;
+log("Kalen geliştirildi.");
+save();
+}
+function startBattle(){
+game.enemy=8+game.territory*2;
+document.getElementById("battleStatus").textContent="Sefer başladı!";
+log("Ordun düşman üzerine yürüdü.");
+save();
+}
+function attack(){
+if(game.enemy<=0){log("Önce yeni bir sefer başlat.");return;}
+let damage=Math.max(1,Math.floor(game.soldiers*.5));
+game.enemy=Math.max(0,game.enemy-damage);
+log("Hücum ettin. Düşmana "+damage+" hasar verdin.");
+if(game.enemy===0){
+game.wins++;
+game.gold+=120;
+game.food+=40;
+game.honour+=25;
+game.territory++;
+document.getElementById("battleStatus").textContent="Zafer! Sınır hattı senin.";
+log("Zafer kazandın. 120 altın kazandın.");
+}else{
+let loss=Math.min(game.soldiers,1);
+game.soldiers-=loss;
+log("Çatışmada "+loss+" asker kaybettin.");
+}
+save();
+}
+function defend(){
+if(game.enemy<=0){log("Önce yeni bir sefer başlat.");return;}
+log("Ordun savunma düzenine geçti. Bu tur saldırı yapmadın.");
+save();
+}
+function mission(){
+if(game.claimed){log("Bu ödülü zaten aldın.");return;}
+if(game.soldiers<15){log("Önce 15 askere ulaşmalısın.");return;}
+game.claimed=true;
+game.gold+=100;
+game.honour+=10;
+log("Görev tamamlandı. 100 altın kazandın.");
+save();
+}
+render();
+</script>
+</body>
+</html>
