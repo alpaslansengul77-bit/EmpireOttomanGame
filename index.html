@@ -162,7 +162,7 @@ footer{text-align:center;padding:20px;color:#a99972;font-size:11px}
 
 <div class="card">
 <h2>⚔️ Birlik Kışlası</h2>
-<p>Orduna yeni asker sınıfları kat.</p>
+<button onclick="treasurySupport()">👑 Padişah Hazinesi · 500 Altın</button><p>Orduna yeni asker sınıfları kat.</p>
 
 <div class="stat">🛡️ Yeniçeri<b id="janissary">0</b></div>
 <button onclick="recruitUnit('janissary',100)">Yeniçeri al · 100 Altın</button>
@@ -269,7 +269,16 @@ function recruitUnit(type,cost){
  addLog("Yeni bir "+type+" birliği orduna katıldı.");
  save();
 }
-
+function treasurySupport(){
+ if(game.supportClaimed){
+  alert("Hazine desteğini zaten aldın!");
+  return;
+ }
+ game.gold+=500;
+ game.supportClaimed=true;
+ addLog("Padişah hazinesinden 500 altın aldın!");
+ save();
+}
 function save(){
  try{
  localStorage.setItem("empireSave",JSON.stringify(game));
