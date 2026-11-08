@@ -330,39 +330,56 @@ function startBattle(){
  save();
 }
 
+
 function attack(){
  if(!game.battleActive){
- addLog("Önce sefer başlatmalısın.");
- return;
+  addLog("Önce sefer başlatmalısın.");
+  return;
  }
+
  if(game.enemy<=0){
- addLog("Düşman ordusu zaten yenildi.");
- return;
+  addLog("Düşman ordusu zaten yenildi.");
+  return;
  }
- if(game.food<10){
- addLog("Saldırı için 10 erzak gerekli.");
- return;
- }
- game.food-=10;
- let damage=Math.max(1,Math.floor(game.soldiers*.5)+game.level);
+
+ let janissary=game.janissary||0;
+ let sipahi=game.sipahi||0;
+ let archer=game.archer||0;
+
+ let damage=
+  (janissary*5)+
+  (sipahi*8)+
+  (archer*4)+
+  Math.floor((game.soldiers-janissary-sipahi-archer)*2);
+
+ if(damage<=0)damage=1;
+
  game.enemy=Math.max(0,game.enemy-damage);
- addLog("Hücum ettin. Düşmana "+damage+" hasar verdin.");
+ game.food=Math.max(0,game.food-10);
+
+ addLog("Ordun saldırdı! Verilen hasar: "+damage);
+
  if(game.enemy===0){
- game.wins++;
- game.gold+=120;
- game.food+=40;
- game.honour+=25;
- game.territory++;
- game.battleActive=false;
- document.getElementById("battleStatus").textContent="🏆 ZAFER! Yeni topraklar fethedildi!";
- addLog("Büyük zafer! 120 altın ve 40 erzak kazandın.");
+  game.wins++;
+  game.gold+=120;
+  game.food+=40;
+  game.honour+=25;
+  game.territory++;
+  game.battleActive=false;
+
+  document.getElementById("battleStatus").textContent="🏆 BÜYÜK ZAFER!";
+
+  addLog("Zafer kazandın! 120 altın ve 40 erzak ganimet aldın.");
  }else{
- let loss=Math.min(game.soldiers,Math.max(1,Math.floor(game.enemy/12)));
- game.soldiers-=loss;
- addLog("Çatışmada "+loss+" asker kaybettin.");
+  let loss=Math.min(game.soldiers,1);
+  game.soldiers-=loss;
+  addLog("Çatışmada "+loss+" asker kaybettin.");
  }
+
  save();
 }
+
+ 
 
 function defend(){
  if(!game.battleActive){
