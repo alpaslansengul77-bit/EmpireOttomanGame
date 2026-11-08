@@ -113,7 +113,7 @@ footer{text-align:center;padding:20px;color:#a99972;font-size:11px}
 
 <div class="card">
 <h2>🏗️ Devlet Yönetimi</h2>
-<p>Kaleni geliştirerek devletinin gücünü artır.</p>
+<button onclick="collectTax()">🪙 Vergileri Topla</button><p>Kaleni geliştirerek devletinin gücünü artır.</p>
 <button onclick="upgrade()">Kaleyi geliştir · 150 Altın</button>
 </div>
 
@@ -279,7 +279,24 @@ function treasurySupport(){
  addLog("Padişah hazinesinden 500 altın aldın!");
  save();
 }
-function save(){
+
+function collectTax(){
+ const now=Date.now();
+ const lastTax=game.lastTax||0;
+
+ if(now-lastTax<60000){
+  alert("Vergi toplamak için biraz beklemelisin!");
+  return;
+ }
+
+ game.gold+=100;
+ game.lastTax=now;
+
+ addLog("Halktan 100 altın vergi toplandı.");
+ save();
+}
+
+ function save(){
  try{
  localStorage.setItem("empireSave",JSON.stringify(game));
  }catch(e){}
