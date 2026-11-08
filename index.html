@@ -95,7 +95,7 @@ footer{text-align:center;padding:20px;color:#a99972;font-size:11px}
 <div class="tabs">
 <button onclick="showPage('home')">🏰 Saray</button>
 <button onclick="showPage('army')">⚔️ Ordu</button>
-<button onclick="showPage('battle')">🛡️ Sefer</button>
+<button onclick="showPage('map')">🗺️ Harita</button><button onclick="showPage('battle')">🛡️ Sefer</button>
 <button onclick="showPage('missions')">📜 Görev</button>
 </div>
 
@@ -123,6 +123,40 @@ footer{text-align:center;padding:20px;color:#a99972;font-size:11px}
 <li>Osmanlı sancağı göndere çekildi.</li>
 <li>Yeni bir imparatorluk doğuyor.</li>
 </ul>
+</div>
+</section>
+
+<section id="map" class="page">
+<div class="card">
+<div class="big">🗺️</div>
+<h2>Osmanlı Fetih Haritası</h2>
+<p>Devletini genişletmek için yeni topraklar fethet.</p>
+
+<div class="card">
+<h3>🏰 İstanbul</h3>
+<p>İmparatorluğun başkenti. Kontrol sende.</p>
+<button disabled>Başkent</button>
+</div>
+
+<div class="card">
+<h3>⚔️ Bursa</h3>
+<p>İlk fetih hedefin.</p>
+<button onclick="conquer('Bursa',100,20)">Bursa'yı fethet · 100 Altın</button>
+</div>
+
+<div class="card">
+<h3>🛡️ Edirne</h3>
+<p>Bursa fethedildikten sonra açılır.</p>
+<button onclick="conquer('Edirne',150,30)">Edirne'yi fethet · 150 Altın</button>
+</div>
+
+<div class="card">
+<h3>🌍 Ankara</h3>
+<p>Edirne fethedildikten sonra açılır.</p>
+<button onclick="conquer('Ankara',200,40)">Ankara'yı fethet · 200 Altın</button>
+</div>
+
+<p id="mapStatus">Yeni seferler seni bekliyor.</p>
 </div>
 </section>
 
@@ -332,6 +366,41 @@ function castleMission(){
  game.castleClaimed=true;
  game.gold+=150;
  addLog("Kale Ustası görevi tamamlandı. 150 altın kazandın.");
+ save();
+}
+
+function conquer(city,cost,reward){
+ const order=["Bursa","Edirne","Ankara"];
+ const index=order.indexOf(city);
+
+ if(index<0)return;
+
+ if(!game.conquered)game.conquered=[];
+
+ if(game.conquered.includes(city)){
+ alert("Bu şehir zaten fethedildi!");
+ return;
+ }
+
+ if(index>0 && !game.conquered.includes(order[index-1])){
+ alert("Önce "+order[index-1]+" şehrini fethetmelisin!");
+ return;
+ }
+
+ if(game.gold<cost){
+ alert("Yeterli altının yok!");
+ return;
+ }
+
+ game.gold-=cost;
+ game.honour+=reward;
+ game.territory++;
+ game.conquered.push(city);
+
+ addLog(city+" fethedildi! Şanlı bir zafer!");
+ document.getElementById("mapStatus").textContent=
+ "🏆 "+city+" artık Osmanlı toprağı!";
+
  save();
 }
 
