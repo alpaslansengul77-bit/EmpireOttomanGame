@@ -1,101 +1,57 @@
-
 <!DOCTYPE html>
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Empire Ottoman V2</title>
+<title>Empire Ottoman</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <style>
 *{box-sizing:border-box}
-body{
- margin:0;background:#10170f;color:#f1dfb5;
- font-family:Georgia,serif;
-}
-header{
- text-align:center;padding:25px 12px;
- background:linear-gradient(135deg,#172719,#34452b,#172719);
- border-bottom:3px solid #c5a04c;
-}
+body{margin:0;background:#10170f;color:#f1dfb5;font-family:Georgia,serif}
+header{text-align:center;padding:25px 12px;background:linear-gradient(135deg,#172719,#34452b,#172719);border-bottom:3px solid #c5a04c}
 .logo{font-size:35px}
 header h1{color:#e4bf65;font-size:27px;margin:8px}
 header p{margin:5px;font-size:13px}
 main{max-width:650px;margin:auto;padding:12px}
-.card{
- background:linear-gradient(145deg,#263728,#1a281d);
- border:1px solid #94783c;border-radius:13px;
- padding:15px;margin:12px 0;
- box-shadow:0 4px 12px #0005;
-}
+.card{background:linear-gradient(145deg,#263728,#1a281d);border:1px solid #94783c;border-radius:13px;padding:15px;margin:12px 0;box-shadow:0 4px 12px #0005}
 h2{color:#e4c16c;margin-top:3px}
-.stats{
- display:grid;grid-template-columns:repeat(3,1fr);
- gap:7px;text-align:center;
-}
-.stat{
- background:#111b13;border:1px solid #67552f;
- border-radius:9px;padding:11px 3px;
- font-size:12px;
-}
-.stat b{
- display:block;color:#edc968;
- font-size:20px;margin-top:5px;
-}
-button{
- background:linear-gradient(135deg,#94702f,#59431f);
- color:#fff0ca;border:1px solid #d9b45d;
- border-radius:8px;padding:12px 10px;
- margin:4px 2px;font-weight:bold;
- font-size:13px;
-}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;text-align:center}
+.stat{background:#111b13;border:1px solid #67552f;border-radius:9px;padding:11px 3px;font-size:12px}
+.stat b{display:block;color:#edc968;font-size:20px;margin-top:5px}
+button{background:linear-gradient(135deg,#94702f,#59431f);color:#fff0ca;border:1px solid #d9b45d;border-radius:8px;padding:12px 10px;margin:4px 2px;font-weight:bold;font-size:13px}
 button:active{transform:scale(.97)}
 button:disabled{opacity:.4}
-.tabs{
- display:grid;grid-template-columns:repeat(4,1fr);
- gap:5px;position:sticky;top:0;
- background:#10170f;padding:8px 0;z-index:5;
-}
-.tabs button{margin:0;padding:12px 2px;font-size:12px}
+.tabs{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;position:sticky;top:0;background:#10170f;padding:8px 0;z-index:5}
+.tabs button{margin:0;padding:12px 2px;font-size:11px}
 .page{display:none}
 .page.active{display:block}
-.big{
- text-align:center;font-size:48px;padding:15px;
-}
-.log{
- background:#111a12;border-radius:8px;
- padding:12px;font-size:13px;line-height:1.8;
-}
+.big{text-align:center;font-size:48px;padding:15px}
+.log{background:#111a12;border-radius:8px;padding:12px;font-size:13px;line-height:1.8}
 .small{font-size:12px;color:#c6b68f}
 .gold{color:#edc968}
-.progress{
- height:9px;background:#10170f;
- border-radius:10px;overflow:hidden;margin:8px 0;
-}
-.progress div{height:100%;background:#d5ad50;width:50%}
 footer{text-align:center;padding:20px;color:#a99972;font-size:11px}
+#connectionStatus{font-size:12px;text-align:center;color:#c6b68f;padding:5px}
 </style>
 </head>
 <body>
-
 <header>
 <div class="logo">☾ ⚔ ☽</div>
 <h1>EMPIRE OTTOMAN</h1>
 <p>Bir imparatorluğun kaderi senin ellerinde</p>
 <p>DEVLET-İ ALİYYE</p>
 </header>
-
 <main>
-
+<div id="connectionStatus">Yerel kayıt hazır; Telegram bağlantısı kontrol ediliyor...</div>
 <div class="card stats">
 <div class="stat">🪙 ALTIN<b id="gold">500</b></div>
 <div class="stat">🌾 ERZAK<b id="food">300</b></div>
 <div class="stat">⭐ ŞÖHRET<b id="honour">0</b></div>
 </div>
-
 <div class="tabs">
 <button onclick="showPage('home')">🏰 Saray</button>
 <button onclick="showPage('army')">⚔️ Ordu</button>
-<button onclick="showPage('map')">🗺️ Harita</button><button onclick="showPage('battle')">🛡️ Sefer</button>
+<button onclick="showPage('map')">🗺️ Harita</button>
+<button onclick="showPage('battle')">🛡️ Sefer</button>
 <button onclick="showPage('missions')">📜 Görev</button>
 </div>
 
@@ -110,13 +66,12 @@ footer{text-align:center;padding:20px;color:#a99972;font-size:11px}
 <div class="stat">Sancak<b id="territory">1</b></div>
 </div>
 </div>
-
 <div class="card">
 <h2>🏗️ Devlet Yönetimi</h2>
-<button onclick="collectTax()">🪙 Vergileri Topla</button><p>Kaleni geliştirerek devletinin gücünü artır.</p>
+<button onclick="collectTax()">🪙 Vergileri Topla</button>
+<p>Kaleni geliştirerek devletinin gücünü artır.</p>
 <button onclick="upgrade()">Kaleyi geliştir · 150 Altın</button>
 </div>
-
 <div class="card">
 <h2>📖 Vakanüvis Defteri</h2>
 <ul class="log" id="log">
@@ -131,48 +86,13 @@ footer{text-align:center;padding:20px;color:#a99972;font-size:11px}
 <div class="big">🗺️</div>
 <h2>Osmanlı Fetih Haritası</h2>
 <p>Devletini genişletmek için yeni topraklar fethet.</p>
-
-<div class="card">
-<h3>🏰 İstanbul</h3>
-<p>İmparatorluğun başkenti. Kontrol sende.</p>
-<button disabled>Başkent</button>
-</div>
-
-<div class="card">
-<h3>⚔️ Bursa</h3>
-<p>İlk fetih hedefin.</p>
-<button onclick="conquer('Bursa',100,20)">Bursa'yı fethet · 100 Altın</button>
-</div>
-
-<div class="card">
-<h3>🛡️ Edirne</h3>
-<p>Bursa fethedildikten sonra açılır.</p>
-<button onclick="conquer('Edirne',150,30)">Edirne'yi fethet · 150 Altın</button>
-</div>
-
-<div class="card">
-<h3>🌍 Ankara</h3>
-<p>Edirne fethedildikten sonra açılır.</p>
-<button onclick="conquer('Ankara',200,40)">Ankara'yı fethet · 200 Altın</button>
-</div>
-
+<div class="card"><h3>🏰 İstanbul</h3><p>İmparatorluğun başkenti. Kontrol sende.</p><button disabled>Başkent</button></div>
+<div class="card"><h3>⚔️ Bursa</h3><p>İlk fetih hedefin.</p><button onclick="conquer('Bursa',100,20)">Bursa'yı fethet · 100 Altın</button></div>
+<div class="card"><h3>🛡️ Edirne</h3><p>Bursa fethedildikten sonra açılır.</p><button onclick="conquer('Edirne',150,30)">Edirne'yi fethet · 150 Altın</button></div>
+<div class="card"><h3>🌍 Ankara</h3><p>Edirne fethedildikten sonra açılır.</p><button onclick="conquer('Ankara',200,40)">Ankara'yı fethet · 200 Altın</button></div>
 <p id="mapStatus">Yeni seferler seni bekliyor.</p>
 </div>
 </section>
-
-<div class="card">
-<h2>⚔️ Birlik Kışlası</h2>
-<button onclick="treasurySupport()">👑 Padişah Hazinesi · 500 Altın</button><p>Orduna yeni asker sınıfları kat.</p>
-
-<div class="stat">🛡️ Yeniçeri<b id="janissary">0</b></div>
-<button onclick="recruitUnit('janissary',100)">Yeniçeri al · 100 Altın</button>
-
-<div class="stat">🐎 Sipahi<b id="sipahi">0</b></div>
-<button onclick="recruitUnit('sipahi',150)">Sipahi al · 150 Altın</button>
-
-<div class="stat">🏹 Okçu<b id="archer">0</b></div>
-<button onclick="recruitUnit('archer',80)">Okçu al · 80 Altın</button>
-</div>
 
 <section id="army" class="page">
 <div class="card">
@@ -187,10 +107,17 @@ footer{text-align:center;padding:20px;color:#a99972;font-size:11px}
 <button onclick="recruit()">+5 Yeniçeri · 100 Altın</button>
 </div>
 <div class="card">
-<h2>🎖️ Askerî Durum</h2>
-<p>Asker sayını artırarak daha güçlü düşmanlarla savaşabilirsin.</p>
-<p class="small">Her asker savaş gücüne katkı sağlar.</p>
+<h2>⚔️ Birlik Kışlası</h2>
+<button onclick="treasurySupport()">👑 Padişah Hazinesi · 500 Altın</button>
+<p>Orduna yeni asker sınıfları kat.</p>
+<div class="stat">🛡️ Yeniçeri<b id="janissary">0</b></div>
+<button onclick="recruitUnit('janissary',100)">Yeniçeri al · 100 Altın</button>
+<div class="stat">🐎 Sipahi<b id="sipahi">0</b></div>
+<button onclick="recruitUnit('sipahi',150)">Sipahi al · 150 Altın</button>
+<div class="stat">🏹 Okçu<b id="archer">0</b></div>
+<button onclick="recruitUnit('archer',80)">Okçu al · 80 Altın</button>
 </div>
+<div class="card"><h2>🎖️ Askerî Durum</h2><p>Asker sayını artırarak daha güçlü düşmanlarla savaşabilirsin.</p><p class="small">Her asker savaş gücüne katkı sağlar.</p></div>
 </section>
 
 <section id="battle" class="page">
@@ -215,18 +142,8 @@ footer{text-align:center;padding:20px;color:#a99972;font-size:11px}
 <div class="big">📜</div>
 <h2>Görevler</h2>
 <p>Devletini büyüt, görevleri tamamla ve ödüller kazan.</p>
-<div class="card">
-<h3>🎯 İlk Ordu</h3>
-<p>15 askere ulaş.</p>
-<p>Ödül: 100 Altın + 10 Şöhret</p>
-<button id="missionButton" onclick="mission()">Ödülü al</button>
-</div>
-<div class="card">
-<h3>🏰 Kale Ustası</h3>
-<p>Kaleni 2. seviyeye yükselt.</p>
-<p>Ödül: 150 Altın</p>
-<button id="castleMissionButton" onclick="castleMission()">Ödülü al</button>
-</div>
+<div class="card"><h3>🎯 İlk Ordu</h3><p>15 askere ulaş.</p><p>Ödül: 100 Altın + 10 Şöhret</p><button id="missionButton" onclick="mission()">Ödülü al</button></div>
+<div class="card"><h3>🏰 Kale Ustası</h3><p>Kaleni 2. seviyeye yükselt.</p><p>Ödül: 150 Altın</p><button id="castleMissionButton" onclick="castleMission()">Ödülü al</button></div>
 </div>
 </section>
 
@@ -234,255 +151,227 @@ footer{text-align:center;padding:20px;color:#a99972;font-size:11px}
 </main>
 
 <script>
-const tg=window.Telegram?.WebApp;
+/* Supabase bilgilerini kendi projenle doldur. */
+const SUPABASE_URL = "https://emjxbbuoyfxeqvjhiqcv.supabase.co/rest/v1/";
+const SUPABASE_KEY = "sb_publishable_Gudj_m9eyTt6dYh-sVFF2A_lphITtBZ";
+
+const tg = window.Telegram?.WebApp;
 tg?.ready();
 tg?.expand();
 
-let game;
-try{
- game=JSON.parse(localStorage.getItem("empireSave"));
-}catch(e){}
+const defaultGame = () => ({
+  gold:500, food:300, honour:0, soldiers:10, level:1, territory:1,
+  enemy:8, wins:0, claimed:false, castleClaimed:false,
+  battleActive:false, janissary:0, sipahi:0, archer:0,
+  supportClaimed:false, conquered:[]
+});
 
-if(!game || typeof game!=="object"){
- game={
- gold:500,food:300,honour:0,
- soldiers:10,level:1,territory:1,
- enemy:8,wins:0,claimed:false,
- castleClaimed:false,battleActive:false
- };
+function loadLocalGame(){
+  try{
+    const saved = JSON.parse(localStorage.getItem("empireSave"));
+    if(saved && typeof saved === "object" && !Array.isArray(saved)){
+      return {...defaultGame(), ...saved};
+    }
+  }catch(e){}
+  return defaultGame();
 }
 
-game.janissary=game.janissary||0;
-game.sipahi=game.sipahi||0;
-game.archer=game.archer||0;
+let game = loadLocalGame();
+let cloudReady = false;
+let saveQueue = Promise.resolve();
 
-function recruitUnit(type,cost){
- if(game.gold<cost){
-  alert("Yeterli altının yok!");
-  return;
- }
-
- game.gold-=cost;
- game[type]++;
- game.soldiers++;
-
- addLog("Yeni bir "+type+" birliği orduna katıldı.");
- save();
-}
-function treasurySupport(){
- if(game.supportClaimed){
-  alert("Hazine desteğini zaten aldın!");
-  return;
- }
- game.gold+=500;
- game.supportClaimed=true;
- addLog("Padişah hazinesinden 500 altın aldın!");
- save();
+function setStatus(message){
+  const el = document.getElementById("connectionStatus");
+  if(el) el.textContent = message;
 }
 
-function collectTax(){
- const now=Date.now();
- const lastTax=game.lastTax||0;
+async function cloudRequest(action, gameState){
+  if(!tg?.initData){
+    throw new Error("Oyun Telegram içinden açılmadı.");
+  }
+  if(!SUPABASE_URL.startsWith("https://") || SUPABASE_KEY.includes("BURAYA_")){
+    throw new Error("Supabase URL veya Publishable Key henüz girilmedi.");
+  }
 
- if(now-lastTax<60000){
-  alert("Vergi toplamak için biraz beklemelisin!");
-  return;
- }
+  const response = await fetch(`${SUPABASE_URL}/functions/v1/telegram-auth`, {
+    method:"POST",
+    headers:{
+      "Content-Type":"application/json",
+      "apikey":SUPABASE_KEY,
+      "Authorization":`Bearer ${SUPABASE_KEY}`
+    },
+    body:JSON.stringify({initData:tg.initData, action, gameState})
+  });
 
- game.gold+=100;
- game.lastTax=now;
-
- addLog("Halktan 100 altın vergi toplandı.");
- save();
+  const result = await response.json().catch(()=>({}));
+  if(!response.ok || !result.success){
+    throw new Error(result.error || `Sunucu yanıtı: ${response.status}`);
+  }
+  return result;
 }
 
- function save(){
- try{
- localStorage.setItem("empireSave",JSON.stringify(game));
- }catch(e){}
- render();
+function save(){
+  try{
+    localStorage.setItem("empireSave", JSON.stringify(game));
+  }catch(e){}
+  render();
+
+  if(cloudReady){
+    const snapshot = JSON.parse(JSON.stringify(game));
+    saveQueue = saveQueue.then(() => cloudRequest("save", snapshot))
+      .catch(error => {
+        console.error("Bulut kayıt hatası:", error);
+        setStatus("⚠️ Bulut kaydı beklemede; cihaz kaydı korunuyor.");
+      });
+  }
 }
 
 function addLog(message){
- const li=document.createElement("li");
- li.textContent=message;
- const list=document.getElementById("log");
- list.prepend(li);
- while(list.children.length>15)list.lastChild.remove();
+  const li=document.createElement("li");
+  li.textContent=message;
+  const list=document.getElementById("log");
+  list.prepend(li);
+  while(list.children.length>15) list.lastChild.remove();
 }
 
 function showPage(page){
- document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
- document.getElementById(page).classList.add("active");
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+  document.getElementById(page)?.classList.add("active");
 }
 
 function render(){
- ["gold","food","honour","soldiers","level","territory","enemy","wins"].forEach(k=>{
- const el=document.getElementById(k);
- if(el)el.textContent=game[k];
- });
- document.getElementById("armyCount").textContent=game.soldiers;
- document.getElementById("janissary").textContent=game.janissary;
-document.getElementById("sipahi").textContent=game.sipahi;
-document.getElementById("archer").textContent=game.archer;
- document.getElementById("power").textContent=game.soldiers+game.level*2;
- document.getElementById("battlePower").textContent=game.soldiers+game.level*2;
- document.getElementById("battleTerritory").textContent=game.territory;
- document.getElementById("missionButton").disabled=game.claimed;
- document.getElementById("castleMissionButton").disabled=game.castleClaimed;
+  ["gold","food","honour","soldiers","level","territory","enemy","wins"].forEach(k=>{
+    const el=document.getElementById(k);
+    if(el) el.textContent=game[k] ?? 0;
+  });
+  document.getElementById("armyCount").textContent=game.soldiers;
+  document.getElementById("janissary").textContent=game.janissary;
+  document.getElementById("sipahi").textContent=game.sipahi;
+  document.getElementById("archer").textContent=game.archer;
+  document.getElementById("power").textContent=game.soldiers+game.level*2;
+  document.getElementById("battlePower").textContent=game.soldiers+game.level*2;
+  document.getElementById("battleTerritory").textContent=game.territory;
+  document.getElementById("missionButton").disabled=game.claimed;
+  document.getElementById("castleMissionButton").disabled=game.castleClaimed;
 }
 
+function recruitUnit(type,cost){
+  if(game.gold<cost){alert("Yeterli altının yok!");return;}
+  game.gold-=cost; game[type]++; game.soldiers++;
+  addLog("Yeni bir "+type+" birliği orduna katıldı."); save();
+}
+function treasurySupport(){
+  if(game.supportClaimed){alert("Hazine desteğini zaten aldın!");return;}
+  game.gold+=500; game.supportClaimed=true;
+  addLog("Padişah hazinesinden 500 altın aldın!"); save();
+}
+function collectTax(){
+  const now=Date.now(), lastTax=game.lastTax||0;
+  if(now-lastTax<60000){alert("Vergi toplamak için biraz beklemelisin!");return;}
+  game.gold+=100; game.lastTax=now;
+  addLog("Halktan 100 altın vergi toplandı."); save();
+}
 function recruit(){
- if(game.gold<100){addLog("Yeterli altının bulunmuyor.");return;}
- game.gold-=100;
- game.soldiers+=5;
- addLog("Beş yeniçeri orduna katıldı.");
- save();
+  if(game.gold<100){addLog("Yeterli altının bulunmuyor.");return;}
+  game.gold-=100; game.soldiers+=5;
+  addLog("Beş yeniçeri orduna katıldı."); save();
 }
-
 function upgrade(){
- if(game.gold<150){addLog("Kaleyi geliştirmek için altın yetersiz.");return;}
- game.gold-=150;
- game.level++;
- addLog("Kalen başarıyla geliştirildi. Seviye "+game.level);
- save();
+  if(game.gold<150){addLog("Kaleyi geliştirmek için altın yetersiz.");return;}
+  game.gold-=150; game.level++;
+  addLog("Kalen başarıyla geliştirildi. Seviye "+game.level); save();
 }
-
 function startBattle(){
- game.enemy=8+game.territory*2;
- game.battleActive=true;
- document.getElementById("battleStatus").textContent="Sefer başladı! Düşmanla karşı karşıyasın.";
- addLog("Ordun yeni bir sefere çıktı.");
- save();
+  game.enemy=8+game.territory*2; game.battleActive=true;
+  document.getElementById("battleStatus").textContent="Sefer başladı! Düşmanla karşı karşıyasın.";
+  addLog("Ordun yeni bir sefere çıktı."); save();
 }
-
-
 function attack(){
- if(!game.battleActive){
-  addLog("Önce sefer başlatmalısın.");
-  return;
- }
-
- if(game.enemy<=0){
-  addLog("Düşman ordusu zaten yenildi.");
-  return;
- }
-
- let janissary=game.janissary||0;
- let sipahi=game.sipahi||0;
- let archer=game.archer||0;
-
- let damage=
-  (janissary*5)+
-  (sipahi*8)+
-  (archer*4)+
-  Math.floor((game.soldiers-janissary-sipahi-archer)*2);
-
- if(damage<=0)damage=1;
-
- game.enemy=Math.max(0,game.enemy-damage);
- game.food=Math.max(0,game.food-10);
-
- addLog("Ordun saldırdı! Verilen hasar: "+damage);
-
- if(game.enemy===0){
-  game.wins++;
-  game.gold+=120;
-  game.food+=40;
-  game.honour+=25;
-  game.territory++;
-  game.battleActive=false;
-
-  document.getElementById("battleStatus").textContent="🏆 BÜYÜK ZAFER!";
-
-  addLog("Zafer kazandın! 120 altın ve 40 erzak ganimet aldın.");
- }else{
-  let loss=Math.min(game.soldiers,1);
-  game.soldiers-=loss;
-  addLog("Çatışmada "+loss+" asker kaybettin.");
- }
-
- save();
+  if(!game.battleActive){addLog("Önce sefer başlatmalısın.");return;}
+  if(game.enemy<=0){addLog("Düşman ordusu zaten yenildi.");return;}
+  const damage=(game.janissary*5)+(game.sipahi*8)+(game.archer*4)+
+    Math.floor((game.soldiers-game.janissary-game.sipahi-game.archer)*2);
+  game.enemy=Math.max(0,game.enemy-Math.max(1,damage));
+  game.food=Math.max(0,game.food-10);
+  addLog("Ordun saldırdı! Verilen hasar: "+damage);
+  if(game.enemy===0){
+    game.wins++; game.gold+=120; game.food+=40; game.honour+=25;
+    game.territory++; game.battleActive=false;
+    document.getElementById("battleStatus").textContent="🏆 BÜYÜK ZAFER!";
+    addLog("Zafer kazandın! 120 altın ve 40 erzak ganimet aldın.");
+  }else{
+    const loss=Math.min(game.soldiers,1);
+    game.soldiers-=loss; addLog("Çatışmada "+loss+" asker kaybettin.");
+  }
+  save();
 }
-
- 
-
 function defend(){
- if(!game.battleActive){
- addLog("Önce sefer başlatmalısın.");
- return;
- }
- if(game.food<5){
- addLog("Savunma için 5 erzak gerekli.");
- return;
- }
- game.food-=5;
- game.enemy=Math.max(0,game.enemy-1);
- addLog("Ordun savunma düzeni aldı. Düşman yıpratıldı.");
- save();
+  if(!game.battleActive){addLog("Önce sefer başlatmalısın.");return;}
+  if(game.food<5){addLog("Savunma için 5 erzak gerekli.");return;}
+  game.food-=5; game.enemy=Math.max(0,game.enemy-1);
+  addLog("Ordun savunma düzeni aldı. Düşman yıpratıldı."); save();
 }
-
 function mission(){
- if(game.claimed)return;
- if(game.soldiers<15){
- addLog("Bu görev için 15 askere ulaşmalısın.");
- return;
- }
- game.claimed=true;
- game.gold+=100;
- game.honour+=10;
- addLog("İlk Ordu görevi tamamlandı. 100 altın kazandın.");
- save();
+  if(game.claimed)return;
+  if(game.soldiers<15){addLog("Bu görev için 15 askere ulaşmalısın.");return;}
+  game.claimed=true; game.gold+=100; game.honour+=10;
+  addLog("İlk Ordu görevi tamamlandı. 100 altın kazandın."); save();
 }
-
 function castleMission(){
- if(game.castleClaimed)return;
- if(game.level<2){
- addLog("Önce kaleni 2. seviyeye yükseltmelisin.");
- return;
- }
- game.castleClaimed=true;
- game.gold+=150;
- addLog("Kale Ustası görevi tamamlandı. 150 altın kazandın.");
- save();
+  if(game.castleClaimed)return;
+  if(game.level<2){addLog("Önce kaleni 2. seviyeye yükseltmelisin.");return;}
+  game.castleClaimed=true; game.gold+=150;
+  addLog("Kale Ustası görevi tamamlandı. 150 altın kazandın."); save();
+}
+function conquer(city,cost,reward){
+  const order=["Bursa","Edirne","Ankara"], index=order.indexOf(city);
+  if(index<0)return;
+  if(!game.conquered)game.conquered=[];
+  if(game.conquered.includes(city)){alert("Bu şehir zaten fethedildi!");return;}
+  if(index>0 && !game.conquered.includes(order[index-1])){
+    alert("Önce "+order[index-1]+" şehrini fethetmelisin!");return;
+  }
+  if(game.gold<cost){alert("Yeterli altının yok!");return;}
+  game.gold-=cost; game.honour+=reward; game.territory++;
+  game.conquered.push(city);
+  addLog(city+" fethedildi! Şanlı bir zafer!");
+  document.getElementById("mapStatus").textContent="🏆 "+city+" artık Osmanlı toprağı!";
+  save();
 }
 
-function conquer(city,cost,reward){
- const order=["Bursa","Edirne","Ankara"];
- const index=order.indexOf(city);
+async function initCloudSave(){
+  render();
+  if(!tg?.initData){
+    setStatus("📱 Telegram dışında: cihaz kaydı aktif.");
+    return;
+  }
+  try{
+    setStatus("☁️ Oyuncu hesabı doğrulanıyor...");
+    const result=await cloudRequest("login");
+    const cloudState=result.player?.game_state;
 
- if(index<0)return;
-
- if(!game.conquered)game.conquered=[];
-
- if(game.conquered.includes(city)){
- alert("Bu şehir zaten fethedildi!");
- return;
- }
-
- if(index>0 && !game.conquered.includes(order[index-1])){
- alert("Önce "+order[index-1]+" şehrini fethetmelisin!");
- return;
- }
-
- if(game.gold<cost){
- alert("Yeterli altının yok!");
- return;
- }
-
- game.gold-=cost;
- game.honour+=reward;
- game.territory++;
- game.conquered.push(city);
-
- addLog(city+" fethedildi! Şanlı bir zafer!");
- document.getElementById("mapStatus").textContent=
- "🏆 "+city+" artık Osmanlı toprağı!";
-
- save();
+    if(cloudState && typeof cloudState==="object" && Object.keys(cloudState).length){
+      game={...defaultGame(), ...cloudState};
+      localStorage.setItem("empireSave",JSON.stringify(game));
+      render();
+      setStatus("☁️ Bulut kaydın yüklendi.");
+    }else{
+      setStatus("☁️ Yeni oyuncu hesabı hazır; ilk kayıt gönderiliyor...");
+      cloudReady=true;
+      await cloudRequest("save",game);
+      setStatus("☁️ Bulut kaydı aktif.");
+      return;
+    }
+    cloudReady=true;
+    setStatus("☁️ Telegram hesabın bağlı; bulut kaydı aktif.");
+  }catch(error){
+    console.error("Bulut giriş hatası:",error);
+    setStatus("⚠️ Bulut bağlantısı kurulamadı; cihaz kaydı korunuyor.");
+  }
 }
 
 render();
+initCloudSave();
 </script>
 </body>
 </html>
