@@ -160,6 +160,20 @@ footer{text-align:center;padding:20px;color:#a99972;font-size:11px}
 </div>
 </section>
 
+<div class="card">
+<h2>⚔️ Birlik Kışlası</h2>
+<p>Orduna yeni asker sınıfları kat.</p>
+
+<div class="stat">🛡️ Yeniçeri<b id="janissary">0</b></div>
+<button onclick="recruitUnit('janissary',100)">Yeniçeri al · 100 Altın</button>
+
+<div class="stat">🐎 Sipahi<b id="sipahi">0</b></div>
+<button onclick="recruitUnit('sipahi',150)">Sipahi al · 150 Altın</button>
+
+<div class="stat">🏹 Okçu<b id="archer">0</b></div>
+<button onclick="recruitUnit('archer',80)">Okçu al · 80 Altın</button>
+</div>
+
 <section id="army" class="page">
 <div class="card">
 <div class="big">🛡️</div>
@@ -238,6 +252,24 @@ if(!game || typeof game!=="object"){
  };
 }
 
+game.janissary=game.janissary||0;
+game.sipahi=game.sipahi||0;
+game.archer=game.archer||0;
+
+function recruitUnit(type,cost){
+ if(game.gold<cost){
+  alert("Yeterli altının yok!");
+  return;
+ }
+
+ game.gold-=cost;
+ game[type]++;
+ game.soldiers++;
+
+ addLog("Yeni bir "+type+" birliği orduna katıldı.");
+ save();
+}
+
 function save(){
  try{
  localStorage.setItem("empireSave",JSON.stringify(game));
@@ -264,6 +296,9 @@ function render(){
  if(el)el.textContent=game[k];
  });
  document.getElementById("armyCount").textContent=game.soldiers;
+ document.getElementById("janissary").textContent=game.janissary;
+document.getElementById("sipahi").textContent=game.sipahi;
+document.getElementById("archer").textContent=game.archer;
  document.getElementById("power").textContent=game.soldiers+game.level*2;
  document.getElementById("battlePower").textContent=game.soldiers+game.level*2;
  document.getElementById("battleTerritory").textContent=game.territory;
