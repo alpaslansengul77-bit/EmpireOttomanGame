@@ -366,7 +366,7 @@ async function initCloudSave(){
     setStatus("☁️ Telegram hesabın bağlı; bulut kaydı aktif.");
   }catch(error){
     console.error("Bulut giriş hatası:",error);
-    setStatus("⚠️ Bulut bağlantısı kurulamadı; cihaz kaydı korunuyor.");
+    setStatus("⚠️ Bulut hatası: " + error.message);
   }
 }
 
